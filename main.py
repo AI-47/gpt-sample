@@ -19,12 +19,14 @@ async def add_todo(username):
 
 @app.get("/todos/<string:username>")
 async def get_todos(username):
+    print(f"username is {username}")
     return quart.Response(response=json.dumps(_TODOS.get(username, [])), status=200)
 
 @app.delete("/todos/<string:username>")
 async def delete_todo(username):
     request = await quart.request.get_json(force=True)
     todo_idx = request["todo_idx"]
+    print(f"username is {username}")
     # fail silently, it's a simple plugin
     if 0 <= todo_idx < len(_TODOS[username]):
         _TODOS[username].pop(todo_idx)
